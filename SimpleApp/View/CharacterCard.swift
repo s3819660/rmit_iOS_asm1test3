@@ -30,7 +30,7 @@ struct CharacterCard: View {
 
                 if note.isEmpty {
                   Text("Enter your note")
-                        .foregroundColor(Color.black.opacity(0.3))
+                        .foregroundColor(Color.gray.opacity(0.8))
 //                        .offset(x: 20, y: 20)
                 }
                 

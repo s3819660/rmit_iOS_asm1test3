@@ -22,8 +22,14 @@ struct CharacterRow: View {
             } placeholder: {
                 Color.red
             }
-            .frame(width: 128, height: 128)
-            .clipShape(RoundedRectangle(cornerRadius: 25))
+            .frame(width: 150, height: 150)
+//            .clipShape(RoundedRectangle(cornerRadius: 25))
+
+            VStack {
+                Text(character.name)
+                Text(character.origin.name)
+                Text(character.status)
+            }
         }
     }
 }

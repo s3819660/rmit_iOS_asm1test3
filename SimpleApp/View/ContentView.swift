@@ -76,7 +76,7 @@ struct ContentView: View {
         .navigationTitle("SimpleNews")
         .task(fetchCharacters)
         .environmentObject(characterViewModel)
-        
+        .environment(\.colorScheme, .dark) // dark mode
     }
     
     /// Downloads the latest news JSON from Hacking with Swift, decodes it into an array of `Article`
