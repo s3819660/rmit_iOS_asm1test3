@@ -124,6 +124,7 @@ extension Image {
     func centerCropped() -> some View {
         GeometryReader { geo in
             self
+            .resizable()
             .scaledToFill()
             .frame(width: geo.size.width, height: geo.size.height)
             .clipped()
@@ -150,24 +151,10 @@ struct CharacterList: View {
 //    }
     @Namespace var namespace
     var body: some View {
-        
-//            Image("space")
             NavigationView {
-    //            List(characterViewModel.characters){
-    //                contact in
-    //                NavigationLink {
-    //                    CharacterCard(character: contact)
-    //                } label: {
-    //                    CharacterRow(character: contact)
-    //                }
-    //                .navigationTitle("SSET Contact 📒")
-    //                .listRowInsets(EdgeInsets()) // no padding inside the list
-    //            }
                 
-
-//                    Image("space")
-                HStack{
-                    ZStack {
+//                HStack{
+//                    ZStack {
 //                        LinearGradient(gradient: Gradient(colors: [Color.pink, Color.purple]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
 //                        VStack {
 //                            Capsule()
@@ -182,7 +169,6 @@ struct CharacterList: View {
 //                        }
                         
                         ScrollView {
-                            
                             // list title
                             HStack {
                                 Image(systemName: "text.justify")
@@ -202,25 +188,14 @@ struct CharacterList: View {
                             VStack(alignment: .leading) {
                                 ForEach(characterViewModel.characters) { p in
                                     NavigationLink(destination: CharacterCard(character: p)) {
-            //                            Text(p.name)
-                                        
-//                                        smallcardView(p: p, namespace: namespace)
-//                                            .padding()
-//                                            .frame(maxWidth: .infinity)
-//                                            .frame(height: 120)
-//                                            .background(BlurView(style: .regular))
-//                                            .cornerRadius(10)
-//                                            .padding(.vertical,6)
-//                                            .padding(.horizontal)
-                                        
                                         CharacterRow(character: p)
 //                                                .padding()
                                                 .frame(maxWidth: .infinity)
-                                                .frame(height: 120)
+                                                .frame(height: 150)
 //                                                .background(BlurView(style: .regular))
                                                 .background(BlurView())
                                                 .cornerRadius(10)
-                                                .padding(.vertical,6)
+                                                .padding(.vertical, 6)
                                                 .padding(.horizontal)
                                     }
                                 }
@@ -229,9 +204,8 @@ struct CharacterList: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .navigationBarHidden(true)
                         .background(BackgroundView())
-                    }
-                }
-
+//                    }
+//                }
             }
     }
 }
