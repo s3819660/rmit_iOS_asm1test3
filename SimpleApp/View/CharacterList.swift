@@ -112,7 +112,6 @@ struct blurTags:  View {
 //}
 
 struct BlurView: View {
-    
     var body: some View {
         HStack {
             Color.gray
