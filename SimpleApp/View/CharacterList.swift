@@ -7,7 +7,6 @@
 //        thehappyprogrammer.com/custom-list-in-swiftui
 import SwiftUI
 
-
 struct smallcardView: View {
     var p: Character
     let namespace: Namespace.ID
@@ -22,51 +21,12 @@ struct smallcardView: View {
             .frame(width: 150, height: 150)
 //            .clipShape(RoundedRectangle(cornerRadius: 25))
 
-
-
-
             VStack {
                 Text(p.name)
                 Text(p.origin.name)
                 Text(p.status)
             }
         }
-        
-//        GeometryReader { g in
-//            VStack(alignment: .leading) {
-//                HStack {
-////                    Image()
-////                        .resizable()
-////                        .frame(width: 120, height: 90)
-////                        .cornerRadius(10)
-////                        .matchedGeometryEffect(id: "image", in: namespace)
-//                    AsyncImage(url: URL(string: p.image)) { image in
-//                        image.resizable()
-//                    } placeholder: {
-//                        Color.red
-//                    }
-//                    .frame(width: 120, height: 90)
-//                    .cornerRadius(10)
-//                    .matchedGeometryEffect(id: "image", in: namespace)
-//
-//                    VStack(alignment: .leading) {
-////                        blurTags(tags: p.postType, namespace: namespace)
-//                        Spacer()
-//                        Text(p.name)
-//                            .foregroundColor(Color.white)
-////                            .matchedGeometryEffect(id: "title", in: namespace)
-//                        Spacer()
-//                    }.padding(.leading)
-//                    Spacer()
-////                    VStack {
-////                        Image(systemName: "ellipsis")
-////                            .foregroundColor(Color.white)
-//////                            .matchedGeometryEffect(id: "ellipsis", in: namespace)
-////                        Spacer()
-////                    }
-//                }
-//            }
-//        }
     }
 }
 
@@ -86,30 +46,6 @@ struct blurTags:  View {
         }.matchedGeometryEffect(id: "tags", in: namespace)
     }
 }
-
-//struct BlurView: UIViewRepresentable {
-//
-//    let style: UIBlurEffect.Style
-//
-//    func makeUIView(context: UIViewRepresentableContext<BlurView>) -> UIView {
-//        let view = UIView(frame: .zero)
-//        view.backgroundColor = .clear
-//        let blurEffect = UIBlurEffect(style: style)
-//        let blurView = UIVisualEffectView(effect: blurEffect)
-//        blurView.translatesAutoresizingMaskIntoConstraints = false
-//        view.insertSubview(blurView, at: 0)
-//        NSLayoutConstraint.activate([
-//            blurView.heightAnchor.constraint(equalTo: view.heightAnchor),
-//            blurView.widthAnchor.constraint(equalTo: view.widthAnchor),
-//        ])
-//        return view
-//    }
-//
-//    func updateUIView(_ uiView: UIView,
-//                      context: UIViewRepresentableContext<BlurView>) {
-//
-//    }
-//}
 
 struct BlurView: View {
     var body: some View {
@@ -139,79 +75,87 @@ struct BackgroundView: View {
     }
 }
 
+struct SearchBar: View {
+    @Binding var searchText: String
+    @Binding var searching: Bool
+    
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .foregroundColor(Color(red: 0.07, green: 0.07, blue: 0.07))
+             HStack {
+                 TextField("Search by name...", text: $searchText) { startedEditing in
+                     if startedEditing {
+                         withAnimation {
+                             searching = true
+                         }
+                     }
+                 } onCommit: {
+                     withAnimation {
+                         searching = false
+                         
+                     }
+                 }
+                 Image(systemName: "magnifyingglass")
+                     .font(.system(size: 20))
+             }
+                .padding()
+         }
+            .frame(height: 40)
+            .cornerRadius(13)
+            .padding()
+    }
+}
+
 
 struct CharacterList: View {
     
     @EnvironmentObject var characterViewModel: CharacterViewModel
+    @State var searchText = ""
+    @State var searching = false
+//    @State var filteredCharacters = [Character]()
     
-//    var body: some View {
-////        Text("hello world")
-//        Text("hello world, \(characterViewModel.characters[characterViewModel.characters.startIndex].name)")
-//    }
     @Namespace var namespace
     var body: some View {
-            NavigationView {
+        NavigationView {
+            ScrollView {
+                SearchBar(searchText: $searchText, searching: $searching)
                 
-//                HStack{
-//                    ZStack {
-//                        LinearGradient(gradient: Gradient(colors: [Color.pink, Color.purple]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
-//                        VStack {
-//                            Capsule()
-//                                .fill(Color.orange)
-//                                .frame(width: 200, height: 200)
-//                                .offset(x: -150, y: -55)
-//                            Spacer()
-//                            Capsule()
-//                                .fill(Color.orange)
-//                                .frame(width: 200, height: 200)
-//                                .offset(x: 150, y: 105)
-//                        }
-                        
-                        ScrollView {
-                            // list title
-                            HStack {
-                                Image(systemName: "text.justify")
-                                    .font(.title3)
-                                    .foregroundColor(Color.white)
-                                Spacer()
-                                Image("logo")
-                                    .resizable()
-                                    .frame(width: 130, height: 40)
-                                Spacer()
-                                Image(systemName: "bell")
-                                    .font(.title2)
-                                    .foregroundColor(Color.white)
-                            }.padding(.horizontal)
-                            
-                            // list
-                            VStack(alignment: .leading) {
-                                ForEach(characterViewModel.characters) { p in
-                                    NavigationLink(destination: CharacterCard(character: p)) {
-                                        CharacterRow(character: p)
+                // list
+                VStack(alignment: .leading) {
+                    ForEach(filteredCharacters) { p in
+                        NavigationLink(destination: CharacterCard(character: p)) {
+                            CharacterRow(character: p)
 //                                                .padding()
-                                                .frame(maxWidth: .infinity)
-                                                .frame(height: 150)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 150)
 //                                                .background(BlurView(style: .regular))
-                                                .background(BlurView())
-                                                .cornerRadius(10)
-                                                .padding(.vertical, 6)
-                                                .padding(.horizontal)
-                                    }
-                                }
-                            }
+                                    .background(BlurView())
+                                    .cornerRadius(10)
+                                    .padding(.vertical, 6)
+                                    .padding(.horizontal)
                         }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .navigationBarHidden(true)
-                        .background(BackgroundView())
-//                    }
-//                }
+                    }
+                }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .navigationBarHidden(true)
+            .background(BackgroundView())
+        }
+    }
+    
+    var filteredCharacters: [Character] {
+        if searchText.isEmpty {
+            return characterViewModel.characters
+        } else {
+            return characterViewModel.characters.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
     }
 }
 
-struct CharacterList_Previews: PreviewProvider {
-    static var previews: some View {
-        CharacterList()
-            .environmentObject(CharacterViewModel())
-    }
-}
+//struct CharacterList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CharacterList()
+//            .environmentObject(CharacterViewModel())
+//    }
+//}

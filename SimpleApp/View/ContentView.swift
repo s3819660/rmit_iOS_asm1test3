@@ -73,7 +73,7 @@ struct ContentView: View {
                 }
             }
         }
-        .navigationTitle("SimpleNews")
+        .navigationTitle("Rick And Morty")
         .task(fetchCharacters)
         .environmentObject(characterViewModel)
         .environment(\.colorScheme, .dark) // dark mode
@@ -114,14 +114,6 @@ struct ContentView: View {
             await MainActor.run {
                 characterViewModel.characters = final.results
             }
-//            characters = final.results
-//            for dat in final.results {
-//                print("data=\(dat.name)")
-//
-//            }
-//            for dat in characters {
-//                print(dat.name)
-//            }
             
             loadState = .success
         } catch {
