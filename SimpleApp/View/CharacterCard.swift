@@ -31,52 +31,118 @@ struct CharacterCard: View {
     
     var body: some View {
         let url = character.image
+        let nameStr = character.name.components(separatedBy: " ")
         
         ScrollView {
             VStack {
-                ZStack {
-                    AsyncImage(url: URL(string: url)) { image in
-                        image.resizable()
-                    } placeholder: {
-                        Color.red
-                    }
+                AsyncImage(url: URL(string: url)) { image in
+                    image.resizable()
+                } placeholder: {
+                    Color.red
+                }
                     .frame(height: UIScreen.screenWidth)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .ignoresSafeArea()
                     .offset(y: -141)
-                }
+                    .mask(LinearGradient(gradient: Gradient(stops: [
+                        .init(color: .black, location: 0),
+                        .init(color: .clear, location: 1),
+                        .init(color: .black, location: 1),
+                        .init(color: .clear, location: 1)
+                    ]), startPoint: .top, endPoint: .bottom)
+                        .ignoresSafeArea()
+                        .offset(y: -141)
+                    )
+            
                 
-                
-                Text(character.name)
-    //            TextField("Note", text: $note)
-                
-    //            TextEditor(text: $note)
-    //                            .foregroundColor(.secondary)
-    //                            .padding(.horizontal)
-    //                            .navigationTitle("Note")
-                
-                ZStack(alignment: .topLeading) {
-                    TextEditor(text: $note)
-                        .frame(height: .infinity)
-
-                    if note.isEmpty {
-                      Text("Enter your note")
-                            .foregroundColor(Color.gray.opacity(0.8))
-    //                        .offset(x: 20, y: 20)
+                VStack {
+                    ForEach(nameStr, id: \.self) { str in
+                        Text(str)
+                            .font(.system(size: 60))
+                            .fontWeight(.heavy)
+                            .padding(-15)
                     }
+//                    Text(character.name.replacingOccurrences(of: " ", with: "\n"))
+//                        .font(.system(size: 45))
+//                        .fontWeight(.heavy)
+//                        .multilineTextAlignment(.center)
+        //            TextField("Note", text: $note)
                     
-    //                TextField("", text: $note)
+                    VStack {
+                        Text("Status:")
+                            .foregroundColor(.gray)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        HStack {
+                            Image(systemName: "circle.fill")
+                                .font(.system(size: 12))
+                                .foregroundColor(getStatusColor(status: character.status))
+                            Text(character.status)
+                                .foregroundColor(.white)
+                                .font(.system(size: 20))
+                        }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        VStack(alignment: .leading) {
+                            Text("Species:")
+                                .foregroundColor(.gray)
+                                .padding(.top, 2)
+    //                            .font(.system(size: 13.5))
+                            Text(character.species)
+                                .font(.system(size: 20))
+                            Text("Origin:")
+                                .foregroundColor(.gray)
+                                .padding(.top, 2)
+    //                            .font(.system(size: 13.5))
+                            Text(character.origin.name)
+                                .font(.system(size: 20))
+                            Text("Gender:")
+                                .foregroundColor(.gray)
+                                .padding(.top, 2)
+                            Text(character.gender)
+                                .font(.system(size: 20))
+                            Text("Type:")
+                                .foregroundColor(.gray)
+                                .padding(.top, 2)
+                            Text(character.type)
+                                .font(.system(size: 20))
+                            Text("Location:")
+                                .foregroundColor(.gray)
+                                .padding(.top, 2)
+                            Text(character.location.name)
+                                .font(.system(size: 20))
+                        }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                        .padding(.top, 50)
+                        .padding(.horizontal, 6)
+
+
+                    Text("Note:")
+                        .foregroundColor(.gray)
+                        .padding(.top, 2)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 6)
+                    ZStack(alignment: .topLeading) {
+                        TextEditor(text: $note)
+                            .frame(height: 300)
+
+                        if note.isEmpty {
+                          Text("Enter your note")
+                                .foregroundColor(Color.gray.opacity(0.8))
+                                .offset(x: 4, y: 8)
+                        }
+        //                TextField("", text: $note)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .overlay(RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.yellow.opacity(0.7), lineWidth: 1))
                 }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 4)
-                .overlay(RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color.purple, lineWidth: 1))
+//                .padding(.horizontal, 10)
+//                .padding(.vertical, 10)
+                .offset(y: -245)
             }
                 .onDisappear(perform:{
-        //            if note.prefix(1) == "1" {
-        //                saveNoteToFirestore(id: character.id, note: note)
-        //            }
-                    
                     if fetchedNote == note {
         //                print("not updated")
                     } else {
@@ -88,9 +154,9 @@ struct CharacterCard: View {
                     fetchNoteFromFirestore(characterId: character.id)
                     print(note)
                 })
-            }
-            .background(BackgroundView())
         }
+            .background(BackgroundView())
+    }
 
     
     func saveNoteToFirestore(id: Int, note: String) {
@@ -108,7 +174,6 @@ struct CharacterCard: View {
     
     func fetchNoteFromFirestore(characterId: Int) {
         let ref = db.collection("notes").document(String(characterId))
-//        var res = ""
         
         ref.getDocument(source: .cache) { (document, error) in
           if let document = document {
@@ -122,9 +187,6 @@ struct CharacterCard: View {
               note = ""
           }
         }
-        
-//        print("res=\(res)")
-//        return res
     }
 }
 

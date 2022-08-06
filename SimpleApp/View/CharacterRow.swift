@@ -46,7 +46,7 @@ struct CharacterRow: View {
                     .foregroundColor(.white)
                 HStack {
                     
-                    
+
                     Image(systemName: "circle.fill")
                         .font(.system(size: 10))
                         .foregroundColor(getStatusColor(status: character.status))
@@ -70,7 +70,7 @@ struct CharacterRow: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .offset(x: -28)
-                
+        
             .padding(10)
         }
     }
