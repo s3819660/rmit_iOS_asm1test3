@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		892F2C4F289518B5009ECDC0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 892F2C4E289518B5009ECDC0 /* FirebaseFirestore */; };
 		892F2C51289518B5009ECDC0 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 892F2C50289518B5009ECDC0 /* FirebaseFirestoreSwift */; };
+		894F7B3A289E8E3700CFAA70 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F7B39289E8E3700CFAA70 /* MapView.swift */; };
 		896A9133288FEFD8004C1692 /* SimpleAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896A9132288FEFD8004C1692 /* SimpleAppApp.swift */; };
 		896A9135288FEFD8004C1692 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896A9134288FEFD8004C1692 /* ContentView.swift */; };
 		896A9137288FEFDA004C1692 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 896A9136288FEFDA004C1692 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		894F7B39289E8E3700CFAA70 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		896A912F288FEFD8004C1692 /* SimpleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		896A9132288FEFD8004C1692 /* SimpleAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAppApp.swift; sourceTree = "<group>"; };
 		896A9134288FEFD8004C1692 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				896A914428900CF4004C1692 /* CharacterList.swift */,
 				89EEEC342891714F00DFDD45 /* CharacterCard.swift */,
 				89EEEC362891715D00DFDD45 /* CharacterRow.swift */,
+				894F7B39289E8E3700CFAA70 /* MapView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -184,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89EEEC352891714F00DFDD45 /* CharacterCard.swift in Sources */,
+				894F7B3A289E8E3700CFAA70 /* MapView.swift in Sources */,
 				89EEEC39289172D000DFDD45 /* CharacterImage.swift in Sources */,
 				896A9143288FF58D004C1692 /* Character.swift in Sources */,
 				896A9135288FEFD8004C1692 /* ContentView.swift in Sources */,

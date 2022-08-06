@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
+import MapKit
 
 //struct BlurImageView {
 //    var body: some View {
@@ -116,7 +117,6 @@ struct CharacterCard: View {
                         .padding(.top, 50)
                         .padding(.horizontal, 6)
 
-
                     Text("Note:")
                         .foregroundColor(.gray)
                         .padding(.top, 2)
@@ -137,9 +137,13 @@ struct CharacterCard: View {
                     .padding(.vertical, 4)
                     .overlay(RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.yellow.opacity(0.7), lineWidth: 1))
+                    
+        //            41.06455686720662, -102.07430812008582
+                    MapView(coordinate: CLLocationCoordinate2D(latitude: 34.011_286, longitude: -116.166_868))
+                        .edgesIgnoringSafeArea(.top)
+                        .frame(height: 300)
+                        .cornerRadius(20)
                 }
-//                .padding(.horizontal, 10)
-//                .padding(.vertical, 10)
                 .offset(y: -245)
             }
                 .onDisappear(perform:{
