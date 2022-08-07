@@ -2,7 +2,7 @@
 As an avid fan of the famous animation show Rick and Morty, I have developed this iOS application to display the information of the characters that appeared on the show. This application presents basic information of the character such as, name, status, origin, and the location where the character was last seen on the map along with the image of each character. To show appreciation to the incredible producers of Rick and Morty and to exhibit a demonstration of my learning curve in iOS development, I have made this application using the programming language Swift, the IDE Xcode, and an integration of the Firestore Cloud storage.
 In general, the application has 2 views: Character List and Character Card.
 
-![SimpleApp Gif](https://drive.google.com/uc?export=view&id=12BtniESaCZ5jJmYSbRsyMXPk0Xg0KqcF)
+![SimpleApp Gif](https://drive.google.com/uc?export=view&id=19mYvQXWw3I0F1dYkmLplY4o1QtBGJfiF)
 
 ![SimpleApp](https://i.imgur.com/WhbfoL4.png)
 ![SimpleApp](https://i.imgur.com/2Q7OxVc.png)
