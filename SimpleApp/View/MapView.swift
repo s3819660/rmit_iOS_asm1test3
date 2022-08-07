@@ -15,11 +15,8 @@ struct MapView: View {
     @State private var region = MKCoordinateRegion()
 
     var body: some View {
-        
-        
         Map(coordinateRegion: $region, annotationItems: lastSeenLocations) { location in
-//            MapMarker(coordinate: location.coordinate)
-//            MapMarker(coordinate: coordinate)
+            // Map marker with text
             MapAnnotation(coordinate: coordinate) {
                 VStack {
                     Group {

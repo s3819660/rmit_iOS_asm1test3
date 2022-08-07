@@ -20,9 +20,7 @@ func getStatusColor(status: String) -> Color {
 
 struct CharacterRow: View {
     var character: Character
-    
-    // cache image
-    // www.youtube.com/watch?v=KhGyiOk3Yzk
+
     var body: some View {
 //        let url = "https://www.hackingwithswift.com/img/paul-2.png"
         let url = character.image
@@ -35,9 +33,6 @@ struct CharacterRow: View {
             }
             .frame(width: 150, height: 150)
             .frame(maxWidth: .infinity, alignment: .leading)
-
-//            .frame(width: .infinity, alignment: .leading)
-//            .clipShape(RoundedRectangle(cornerRadius: 25))
 
             VStack(alignment: .leading) {
                 Text(character.name)

@@ -38,6 +38,7 @@ struct CharacterCard: View {
         
         ScrollView {
             VStack {
+                // Image
                 AsyncImage(url: URL(string: url)) { image in
                     image.resizable()
                 } placeholder: {
@@ -57,7 +58,7 @@ struct CharacterCard: View {
                         .offset(y: -141)
                     )
             
-                
+                // Name display style
                 VStack {
                     ForEach(nameStr, id: \.self) { str in
                         Text(str)
@@ -66,6 +67,7 @@ struct CharacterCard: View {
                             .padding(-15)
                     }
                     
+                    // Character information
                     VStack {
                         Text("Status:")
                             .foregroundColor(.gray)
@@ -84,13 +86,11 @@ struct CharacterCard: View {
                             Text("Species:")
                                 .foregroundColor(.gray)
                                 .padding(.top, 2)
-    //                            .font(.system(size: 13.5))
                             Text(character.species)
                                 .font(.system(size: 20))
                             Text("Origin:")
                                 .foregroundColor(.gray)
                                 .padding(.top, 2)
-    //                            .font(.system(size: 13.5))
                             Text(character.origin.name)
                                 .font(.system(size: 20))
                             Text("Gender:")
@@ -103,7 +103,7 @@ struct CharacterCard: View {
                                 .padding(.top, 2)
                             Text(character.type)
                                 .font(.system(size: 20))
-                            Text("Location:")
+                            Text("Registered Location:")
                                 .foregroundColor(.gray)
                                 .padding(.top, 2)
                             Text(character.location.name)
@@ -114,6 +114,7 @@ struct CharacterCard: View {
                         .padding(.top, 50)
                         .padding(.horizontal, 6)
 
+                    // Text Area with placeholder
                     Text("Note:")
                         .foregroundColor(.gray)
                         .padding(.top, 3)
@@ -134,24 +135,30 @@ struct CharacterCard: View {
                     .overlay(RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.yellow.opacity(0.7), lineWidth: 1))
                     
-                    Text("Last seen in:")
-                        .foregroundColor(.gray)
-                        .padding(.top, 15)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 6)
-                    MapView(coordinate: CLLocationCoordinate2D(latitude: generateLastSeenLocation(type: "lat"), longitude: generateLastSeenLocation(type: "long")), lastSeenLocations: lastSeenLocations)
-                        .edgesIgnoringSafeArea(.top)
-                        .frame(height: 300)
-                        .cornerRadius(20)
+                    // Last seen location in MapView
+                    if (character.status.lowercased() == "alive") {
+                        Text("Last seen in:")
+                            .foregroundColor(.gray)
+                            .padding(.top, 15)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 6)
+                        MapView(coordinate: CLLocationCoordinate2D(latitude: generateLastSeenLocation(type: "lat"), longitude: generateLastSeenLocation(type: "long")), lastSeenLocations: lastSeenLocations)
+                            .edgesIgnoringSafeArea(.top)
+                            .frame(height: 300)
+                            .cornerRadius(20)
+                    }
                 }
                 .offset(y: -245)
             }
                 .onDisappear(perform:{
+                    // when closing the view, check if the note has changed
+                    // if note is changed, update note to Firestore
                     if fetchedNote != note {
                         saveNoteToFirestore(id: character.id, note: note)
                     }
                 })
                 .onAppear(perform: {
+                    // Fetch note from Firestore when rendering view
                     fetchNoteFromFirestore(characterId: character.id)
                     print(note)
                 })
@@ -190,6 +197,8 @@ struct CharacterCard: View {
         }
     }
     
+    // Generate random location of the Rick and Morty character
+    // Their location changes a lot because they all have teleportation ability
     func generateLastSeenLocation(type: String) -> Double {
 //            40.06455686720662, -102.07430812008582
         if (type == "lat") {

@@ -1,36 +1,12 @@
+//
+//  Character.swift
+//  SimpleApp
+//
+//  Created by Phuc Nguyen Phuoc Nhu on 27/07/2022.
+//
+
 import Foundation
 import SwiftUI
-
-//// MARK: - Welcome
-//struct CharacterAPIResponse: Codable {
-//    let info: Info
-//    let results: [Result]
-//}
-//
-//// MARK: - Info
-//struct Info: Codable {
-//    let count, pages: Int
-//    let next, prev: String
-//}
-//
-//// MARK: - Result
-//struct Result: Identifiable, Codable {
-//    let id: Int
-//    let name, status, species, type: String
-//    let gender: String
-//    let origin, location: Location
-//    let image: String
-//    let episode: [String]
-//    let url: String
-//    let created: String
-//}
-//
-//// MARK: - Location
-//struct Location: Codable {
-//    let name: String
-//    let url: String
-//}
-
 
 // MARK: - Welcome
 class CharacterAPIResponse: Codable {
@@ -66,10 +42,6 @@ class Character: Identifiable, Codable {
     let episode: [String]
     let url: String
     let created: String
-
-//    init() {
-//        
-//    }
     
     init(id: Int, name: String, status: String, species: String, type: String, gender: String, origin: Location, location: Location, image: String, episode: [String], url: String, created: String) {
         self.id = id

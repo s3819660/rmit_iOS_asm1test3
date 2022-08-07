@@ -4,7 +4,7 @@
 //
 //  Created by Phuc Nguyen Phuoc Nhu on 26/07/2022.
 //
-//        thehappyprogrammer.com/custom-list-in-swiftui
+//
 import SwiftUI
 
 struct smallcardView: View {
@@ -19,7 +19,6 @@ struct smallcardView: View {
                 Color.red
             }
             .frame(width: 150, height: 150)
-//            .clipShape(RoundedRectangle(cornerRadius: 25))
 
             VStack {
                 Text(p.name)
@@ -113,7 +112,6 @@ struct CharacterList: View {
     @EnvironmentObject var characterViewModel: CharacterViewModel
     @State var searchText = ""
     @State var searching = false
-//    @State var filteredCharacters = [Character]()
     
     @Namespace var namespace
     var body: some View {
@@ -126,10 +124,8 @@ struct CharacterList: View {
                     ForEach(filteredCharacters) { p in
                         NavigationLink(destination: CharacterCard(character: p)) {
                             CharacterRow(character: p)
-//                                                .padding()
                                     .frame(maxWidth: .infinity)
                                     .frame(height: 150)
-//                                                .background(BlurView(style: .regular))
                                     .background(BlurView())
                                     .cornerRadius(10)
                                     .padding(.vertical, 6)
