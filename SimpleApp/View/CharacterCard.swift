@@ -10,13 +10,11 @@ import FirebaseCore
 import FirebaseFirestore
 import MapKit
 
-//struct BlurImageView {
-//    var body: some View {
-//        HStack {
-//            Color.gray
-//        }.opacity(0.2)
-//    }
-//}
+struct MapLocation: Identifiable {
+    let id = UUID()
+    let name: String
+    let coordinate: CLLocationCoordinate2D
+}
 
 extension UIScreen{
    static let screenWidth = UIScreen.main.bounds.size.width
@@ -29,6 +27,10 @@ struct CharacterCard: View {
     var character: Character
     @State private var note: String = ""
     @State private var fetchedNote: String = ""
+    
+    let lastSeenLocations = [
+        MapLocation(name: "Last seen in", coordinate: CLLocationCoordinate2D(latitude: 34.011_286, longitude: -116.166_868))
+    ]
     
     var body: some View {
         let url = character.image
@@ -63,11 +65,6 @@ struct CharacterCard: View {
                             .fontWeight(.heavy)
                             .padding(-15)
                     }
-//                    Text(character.name.replacingOccurrences(of: " ", with: "\n"))
-//                        .font(.system(size: 45))
-//                        .fontWeight(.heavy)
-//                        .multilineTextAlignment(.center)
-        //            TextField("Note", text: $note)
                     
                     VStack {
                         Text("Status:")
@@ -119,7 +116,7 @@ struct CharacterCard: View {
 
                     Text("Note:")
                         .foregroundColor(.gray)
-                        .padding(.top, 2)
+                        .padding(.top, 3)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 6)
                     ZStack(alignment: .topLeading) {
@@ -131,15 +128,18 @@ struct CharacterCard: View {
                                 .foregroundColor(Color.gray.opacity(0.8))
                                 .offset(x: 4, y: 8)
                         }
-        //                TextField("", text: $note)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)
                     .overlay(RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.yellow.opacity(0.7), lineWidth: 1))
                     
-        //            41.06455686720662, -102.07430812008582
-                    MapView(coordinate: CLLocationCoordinate2D(latitude: 34.011_286, longitude: -116.166_868))
+                    Text("Last seen in:")
+                        .foregroundColor(.gray)
+                        .padding(.top, 15)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 6)
+                    MapView(coordinate: CLLocationCoordinate2D(latitude: generateLastSeenLocation(type: "lat"), longitude: generateLastSeenLocation(type: "long")), lastSeenLocations: lastSeenLocations)
                         .edgesIgnoringSafeArea(.top)
                         .frame(height: 300)
                         .cornerRadius(20)
@@ -147,10 +147,7 @@ struct CharacterCard: View {
                 .offset(y: -245)
             }
                 .onDisappear(perform:{
-                    if fetchedNote == note {
-        //                print("not updated")
-                    } else {
-        //                print("updated")
+                    if fetchedNote != note {
                         saveNoteToFirestore(id: character.id, note: note)
                     }
                 })
@@ -191,6 +188,14 @@ struct CharacterCard: View {
               note = ""
           }
         }
+    }
+    
+    func generateLastSeenLocation(type: String) -> Double {
+//            40.06455686720662, -102.07430812008582
+        if (type == "lat") {
+            return 40.064_556 + Double.random(in: -20...20)
+        }
+        return -102.074_308 + Double.random(in: -16...20)
     }
 }
 
